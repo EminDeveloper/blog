@@ -29,18 +29,13 @@ public class BlogController {
     }
 
     @GetMapping("/blogs")
-    public ResponseEntity<List> getAllBlogs()throws BlogNotFoundException{
-        return new ResponseEntity<List>((List) blogService.getAllBlogs(), HttpStatus.OK);
+    public ResponseEntity<List<Blog>> getAllBlogs() throws BlogNotFoundException {
+        return new ResponseEntity<List<Blog>>((List<Blog>) blogService.getAllBlogs(), HttpStatus.OK);
     }
 
-    @GetMapping("/blog/{id}")
-    public ResponseEntity getBlogById(@PathVariable("id") int id){
-        try{
-            return new ResponseEntity(blogService.getBlogById(id), HttpStatus.OK);
-        }
-        catch (BlogNotFoundException blogNotFoundException){
-            return new ResponseEntity(blogNotFoundException.getMessage(), HttpStatus.CONFLICT);
-        }
+    @GetMapping("blog/{id}")
+    public ResponseEntity<Blog> getBlogById(@PathVariable("id") int id) throws BlogNotFoundException {
+        return new ResponseEntity<Blog>(blogService.getBlogById(id), HttpStatus.OK);
     }
 
     @ExceptionHandler(value = BlogAlreadyExistsException.class)
