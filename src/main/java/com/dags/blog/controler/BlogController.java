@@ -34,7 +34,7 @@ public class BlogController {
     }
 
     @GetMapping("/blog/{id}")
-    public ResponseEntity getBlogById(@PathVariable("id") int id) throws BlogNotFoundException{
+    public ResponseEntity getBlogById(@PathVariable("id") int id){
         try{
             return new ResponseEntity(blogService.getBlogById(id), HttpStatus.OK);
         }
@@ -48,8 +48,4 @@ public class BlogController {
         return new ResponseEntity("Blog already exists", HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(value = BlogNotFoundException.class)
-    public ResponseEntity handleBlogNotFoundException(BlogNotFoundException blogNotFoundException){
-        return new ResponseEntity("Blog Not Found", HttpStatus.NO_CONTENT);
-    }
 }
